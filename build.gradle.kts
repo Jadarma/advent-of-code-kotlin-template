@@ -1,3 +1,8 @@
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+import org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED
+import org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED
+import org.gradle.kotlin.dsl.KotlinClosure2
+
 plugins {
     kotlin("jvm") version "1.8.10"
 }
@@ -32,4 +37,27 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+    testLogging {
+        events = setOf(FAILED, SKIPPED)
+        exceptionFormat = FULL
+        showStandardStreams = true
+        showCauses = true
+        showExceptions = true
+        showStackTraces = false
+
+        // Prints a summary at the end.
+        afterSuite(KotlinClosure2({ desc: TestDescriptor, result: TestResult ->
+            if (desc.parent != null) return@KotlinClosure2
+            with(result) {
+                println(
+                    "\nResults: $resultType (" +
+                    "$testCount tests, " +
+                    "$successfulTestCount passed, " +
+                    "$failedTestCount failed, " +
+                    "$skippedTestCount skipped" +
+                    ")"
+                )
+            }
+        }))
+    }
 }
