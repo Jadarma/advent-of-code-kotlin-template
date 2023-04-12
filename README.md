@@ -175,6 +175,7 @@ If you have the [Kotest Plugin](https://plugins.jetbrains.com/plugin/14080-kotes
 'Run' gutter icon near any `AdventSpec` in your code.
 After that, you can re-run the same test using `Ctrl+F5`, or pressing the _Rerun_ button in the test tool window.
 This provides the most comfortable feedback loop when solving new problems.
+You may also run tests in bulk by right clicking on a test package.
 
 ### From Gradle / CLI
 
@@ -190,7 +191,7 @@ You may also filter and run tests in bulk.
 For example, running all tests within the same year package:
 
 ```shell
-./gradlew test --test 'aockt.y9999'
+./gradlew test --tests 'aockt.y9999'
 ```
 
 If for whatever reason you want to run tests in bulk but skip the parts that have been marked as expensive, you can 
